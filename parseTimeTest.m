@@ -2,6 +2,16 @@ function tests = parseTimeTest
 tests = functiontests(localfunctions);
 end
 
+function setupOnce(testCase)
+testCase.TestData.orig_path = path();
+restoredefaultpath()
+addpath('../parseTime')
+addpath('../num2sepstr')
+end
+function teardownOnce(testCase)
+path(testCase.TestData.orig_path)
+end
+
 function testGeneric(testCase)
 verifyEqual(testCase,parseTime(3600*24*365-1),'52 weeks, 23 hours, 59 minutes, and 59 seconds')
 verifyEqual(testCase,parseTime(3600*24*365-0.1),'52 weeks, 23 hours, 59 minutes, and 59.90 seconds')

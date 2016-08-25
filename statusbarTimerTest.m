@@ -2,6 +2,17 @@ function tests = statusbarTimerTest()
 tests = functiontests(localfunctions);
 end
 
+function setupOnce(testCase)
+testCase.TestData.orig_path = path();
+restoredefaultpath()
+addpath('../statusbarTimer')
+addpath('../parseTime')
+addpath('../num2sepstr')
+end
+function teardownOnce(testCase)
+path(testCase.TestData.orig_path)
+end
+
 function testInCommandWindow(testCase)
 t = verifyWarningFree(testCase,@()statusbarTimer());
 verifyClass(testCase,t,'timer')

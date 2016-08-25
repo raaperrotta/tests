@@ -2,6 +2,15 @@ function tests = num2sepstrTest
 tests = functiontests(localfunctions);
 end
 
+function setupOnce(testCase)
+testCase.TestData.orig_path = path();
+restoredefaultpath()
+addpath('../num2sepstr')
+end
+function teardownOnce(testCase)
+path(testCase.TestData.orig_path)
+end
+
 function testGeneric(testCase)
 verifyEqual(testCase,num2sepstr(1000),'1,000')
 verifyEqual(testCase,num2sepstr(1234.5),'1,234.5')

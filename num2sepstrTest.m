@@ -47,7 +47,7 @@ function testLongNumbers(testCase)
 verifyEqual(testCase,num2sepstr(1234567890123456),'1,234,567,890,123,456')
 verifyEqual(testCase,num2sepstr(1234567890123456,'%.0f'),'1,234,567,890,123,456')
 verifyEqual(testCase,num2sepstr(12345678901234567890),'1.234567890123457e+19')
-% verifyEqual(testCase,num2sepstr(12345678901234567890,'%.0f'),'12,345,678,901,234,567,000')
+verifyEqual(testCase,num2sepstr(12345678901234,'%.0f'),'12,345,678,901,234')
 end
 function testScientificNotation(testCase)
 verifyEqual(testCase,num2sepstr(126,'%.0g'),num2str(126,'%.0g'))

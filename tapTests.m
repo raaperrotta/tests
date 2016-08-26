@@ -20,7 +20,7 @@ end
 
 try
     disp(getenv('WORKSPACE'))
-    suite = TestSuite.fromFolder(fullfile(getenv('WORKSPACE'),'tests'));
+    suite = TestSuite.fromFolder(fullfile(getenv('WORKSPACE')));
     % Create a typical runner with text output
     runner = TestRunner.withTextOutput();
     % Add the TAP plugin and direct its output to a file

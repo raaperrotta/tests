@@ -5,7 +5,7 @@ import matlab.unittest.plugins.ToFile;
 
 try
     disp(getenv('WORKSPACE'))
-    suite = TestSuite.fromFolder(getenv('WORKSPACE'));
+    suite = TestSuite.fromFolder(fullfile(getenv('WORKSPACE'),'tests'));
     % Create a typical runner with text output
     runner = TestRunner.withTextOutput();
     % Add the TAP plugin and direct its output to a file

@@ -5,7 +5,7 @@ import matlab.unittest.plugins.ToFile;
 
 wrk = getenv('WORKSPACE'); % Jenkins environment variable
 
-cd(wrk)
+cd(wrk) 
 
 thisversion = ['R',version('-release')];
 if strcmp(thisversion,'R2015a') && ~verLessThan('matlab','8.5.1')

@@ -5,14 +5,6 @@ import matlab.unittest.plugins.ToFile;
 
 cd(getenv('WORKSPACE'))
 
-% restoredefaultpath
-
-% d = dir(getenv('WORKSPACE'));
-% folders = arrayfun(@(d)fullfile(getenv('WORKSPACE'),d.name),d([d.isdir]),'Uniform',false);
-% for ii = 3:length(folders)
-%     addpath(folders{ii});
-% end
-
 thisversion = ['R',version('-release')];
 if strcmp(thisversion,'R2015a') && ~verLessThan('matlab','8.5.1')
     thisversion = [thisversion,'SP1'];

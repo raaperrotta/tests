@@ -5,8 +5,8 @@ end
 function setupOnce(testCase)
 testCase.TestData.orig_path = path();
 restoredefaultpath()
-addpath('../parseTime')
-addpath('../num2sepstr')
+addpath('parseTime')
+addpath('num2sepstr')
 end
 function teardownOnce(testCase)
 path(testCase.TestData.orig_path)

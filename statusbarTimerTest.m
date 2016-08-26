@@ -5,9 +5,9 @@ end
 function setupOnce(testCase)
 testCase.TestData.orig_path = path();
 restoredefaultpath()
-addpath('../statusbarTimer')
-addpath('../parseTime')
-addpath('../num2sepstr')
+addpath('statusbarTimer')
+addpath('parseTime')
+addpath('num2sepstr')
 end
 function teardownOnce(testCase)
 path(testCase.TestData.orig_path)

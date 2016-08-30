@@ -59,8 +59,8 @@ lbl = {
 };
 xlbl = get(gca,'XTickLabel');
 ylbl = get(gca,'YTickLabel');
-verifyEqual(testCase,xlbl,lbl,xlbl)
-verifyEqual(testCase,ylbl,lbl,ylbl)
+verifyEqual(testCase,xlbl,lbl)
+verifyEqual(testCase,ylbl,lbl)
 end
 
 function testResize(testCase)
@@ -84,8 +84,8 @@ lbl = {
 };
 xlbl = get(gca,'XTickLabel');
 ylbl = get(gca,'YTickLabel');
-assumeEqual(testCase,xlbl,lbl,xlbl)
-assumeEqual(testCase,ylbl,lbl,ylbl)
+assumeEqual(testCase,xlbl,lbl)
+assumeEqual(testCase,ylbl,lbl)
 
 fpos = get(gcf,'Position');
 fpos = fpos.*[1,1,2,2];
@@ -96,8 +96,8 @@ verifyEqual(testCase,xlim(),lim,num2str(xlim()))
 verifyEqual(testCase,ylim(),lim,num2str(ylim()))
 xlbl = get(gca,'XTickLabel');
 ylbl = get(gca,'YTickLabel');
-verifyEqual(testCase,xlbl,lbl,xlbl)
-verifyEqual(testCase,ylbl,lbl,ylbl)
+verifyEqual(testCase,xlbl,lbl)
+verifyEqual(testCase,ylbl,lbl)
 end
 
 function testOnAxesAtATime(testCase)
@@ -106,13 +106,13 @@ lim = xlim();
 lbl = get(gca,'XTickLabel');
 symlog('y');
 verifyEqual(testCase,xlim(),lim,num2str(xlim()))
-verifyEqual(testCase,get(gca,'XTickLabel'),lbl,get(gca,'XTickLabel'))
+verifyEqual(testCase,get(gca,'XTickLabel'),lbl)
 
 testCase.TestData.plotExample();
 lim = ylim();
 lbl = get(gca,'YTickLabel');
 symlog('x');
 verifyEqual(testCase,ylim(),lim,num2str(ylim()))
-verifyEqual(testCase,get(gca,'YTickLabel'),lbl,get(gca,'YTickLabel'))
+verifyEqual(testCase,get(gca,'YTickLabel'),lbl)
 end
 

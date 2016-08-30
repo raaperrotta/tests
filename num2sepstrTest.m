@@ -4,8 +4,13 @@ end
 
 function setupOnce(testCase)
 testCase.TestData.orig_path = path();
+% On my install, the perl script called in restoredefaultpath.m finds the
+% stateflow folder twice. I don't know why but it throws an annoying
+% warning.
+state = warning('off','MATLAB:dispatcher:pathWarning');
 restoredefaultpath()
-addpath('num2sepstr')
+warning(state)
+addpath(fullfile(getenv('WORKSPACE'),'num2sepstr'))
 end
 function teardownOnce(testCase)
 path(testCase.TestData.orig_path)

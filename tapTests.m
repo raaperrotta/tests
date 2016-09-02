@@ -11,7 +11,9 @@ end
 
 wrk = getenv('WORKSPACE'); % Jenkins environment variable
 
-cd(wrk)
+% if ~isempty(wrk)
+%     cd(wrk)
+% end
 
 thisversion = ['R',version('-release')];
 if strcmp(thisversion,'R2015a') && ~verLessThan('matlab','8.5.1')
@@ -19,9 +21,12 @@ if strcmp(thisversion,'R2015a') && ~verLessThan('matlab','8.5.1')
 end
 
 try
-    fprintf('Fetching tests from "%s."',fullfile(wrk,name))
-    ls(fullfile(wrk,name))
-    suite = TestSuite.fromFolder(fullfile(wrk,name));
+    fprintf('Fetching tests from "%s."\n',fullfile(wrk,name))
+    if nargin==0
+        suite = TestSuite.fromFolder(wrk);
+    else
+        suite = TestSuite.fromFile(fullfile(wrk,name));
+    end
     % Create a typical runner with text output
     runner = TestRunner.withTextOutput();
     % Add the TAP plugin and direct its output to a file

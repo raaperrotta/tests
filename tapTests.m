@@ -19,6 +19,8 @@ if strcmp(thisversion,'R2015a') && ~verLessThan('matlab','8.5.1')
 end
 
 try
+    fprintf('Fetching tests from "%s."',fullfile(wrk,name))
+    ls(fullfile(wrk,name))
     suite = TestSuite.fromFolder(fullfile(wrk,name));
     % Create a typical runner with text output
     runner = TestRunner.withTextOutput();

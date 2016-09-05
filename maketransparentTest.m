@@ -35,6 +35,34 @@ h(1).Marker = 'o';
 h(1).MarkerFaceColor = h(1).MarkerEdgeColor;
 drawnow()
 verifyEqual(testCase,h(1).MarkerHandle.FaceColorData(4),uint8(128))
+
+appdata = getappdata(h(1));
+lstnr = appdata.MakeTransparentListener;
+verifyTrue(testCase,isa(lstnr,'event.listener'))
+appdata = getappdata(h(2));
+lstnr = appdata.MakeTransparentListener;
+verifyTrue(testCase,isa(lstnr,'event.listener'))
+end
+
+function testChangeLineType(testCase)
+h = testCase.TestData.plotExample();
+drawnow()
+h = h{2};
+verifyWarningFree(testCase,@()maketransparent(gca,0.5))
+verifyEqual(testCase,h(1).MarkerHandle.EdgeColorData(4),uint8(128))
+verifyEqual(testCase,h(2).Edge.ColorData(4),uint8(128))
+h(1).Marker = 'none';
+h(1).LineStyle = '--';
+h(2).Marker = '^';
+h(2).MarkerSize = 12;
+h(2).LineStyle = ':';
+drawnow()
+h(2).MarkerFaceColor = h(1).MarkerEdgeColor;
+drawnow()
+verifyEqual(testCase,h(1).Edge.ColorData(4),uint8(128))
+verifyEqual(testCase,h(2).Edge.ColorData(4),uint8(128))
+verifyEqual(testCase,h(2).MarkerHandle.FaceColorData(4),uint8(128))
+verifyEqual(testCase,h(2).MarkerHandle.FaceColorData(4),uint8(128))
 end
 
 function testSetByHandle(testCase)
@@ -58,9 +86,9 @@ function testResizeFigure(testCase)
 h = testCase.TestData.plotExample();
 drawnow()
 h = h{2};
-maketransparent(gca,0.5)
-assumeEqual(testCase,h(1).MarkerHandle.EdgeColorData(4),uint8(128))
-assumeEqual(testCase,h(2).Edge.ColorData(4),uint8(128))
+maketransparent(gca,0.4)
+assumeEqual(testCase,h(1).MarkerHandle.EdgeColorData(4),uint8(102))
+assumeEqual(testCase,h(2).Edge.ColorData(4),uint8(102))
 
 
 pos = get(gcf,'Position');
@@ -69,6 +97,21 @@ pos(1:2) = pos(1:2) - (k-1)/2*pos(3:4);
 pos(3:4) = k*pos(3:4);
 set(gcf,'Position',pos)
 drawnow()
-verifyEqual(testCase,h(1).MarkerHandle.EdgeColorData(4),uint8(128))
-verifyEqual(testCase,h(2).Edge.ColorData(4),uint8(128))
+verifyEqual(testCase,h(1).MarkerHandle.EdgeColorData(4),uint8(102))
+verifyEqual(testCase,h(2).Edge.ColorData(4),uint8(102))
+end
+
+function testDeleteListener(testCase)
+h = testCase.TestData.plotExample();
+drawnow()
+h = h{2};
+maketransparent(gca,0.5)
+assumeEqual(testCase,h(1).MarkerHandle.EdgeColorData(4),uint8(128))
+assumeEqual(testCase,h(2).Edge.ColorData(4),uint8(128))
+
+maketransparent(gca,[])
+appdata = getappdata(h(1));
+verifyTrue(testCase,isempty(appdata.MakeTransparentListener))
+appdata = getappdata(h(2));
+verifyTrue(testCase,isempty(appdata.MakeTransparentListener))
 end

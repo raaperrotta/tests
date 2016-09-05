@@ -97,7 +97,7 @@ file = tempname;
 fig = figure();
 verifyWarningFree(testCase,@()statusbarTimer(fig,true));
 diary(file)
-verifyWarningFree(testCase,@()close(fig));
+close(fig);
 diary off
 verifyTrue(testCase,isempty(fileread(file)),fileread(file))
 end

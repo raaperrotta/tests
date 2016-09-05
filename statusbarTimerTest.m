@@ -13,9 +13,12 @@ warning(state)
 addpath(fullfile(getenv('WORKSPACE'),'statusbarTimer'))
 addpath(fullfile(getenv('WORKSPACE'),'parseTime'))
 addpath(fullfile(getenv('WORKSPACE'),'num2sepstr'))
+testCase.TestData.JFrameWarningState = ...
+    warning('off','MATLAB:HandleGraphics:ObsoletedProperty:JavaFrame');
 end
 function teardownOnce(testCase)
 path(testCase.TestData.orig_path)
+warning(testCase.TestData.JFrameWarningState)
 end
 
 function testInCommandWindow(testCase)
@@ -114,5 +117,12 @@ stop(t);
 diary off
 verifyFalse(testCase,isempty(fileread(file)),fileread(file))
 
+close(fig)
+end
+function testJFrameWarning(testCase)
+restore = onCleanup(@()warning('off','MATLAB:HandleGraphics:ObsoletedProperty:JavaFrame'));
+warning('on','MATLAB:HandleGraphics:ObsoletedProperty:JavaFrame')
+fig = figure();
+verifyWarning(testCase,@()statusbarTimer(fig),'statusbarTimer:JFrame')
 close(fig)
 end

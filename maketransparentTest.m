@@ -1,4 +1,4 @@
-function tests = maketransparentTests
+function tests = maketransparentTest
 tests = functiontests(localfunctions);
 end
 

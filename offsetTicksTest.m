@@ -189,23 +189,23 @@ end
 
 function testNewLineWarning(testCase)
 testCase.TestData.plotExample();
-verifyWarning(tetsCase,@()offsetTicks(gca,'x','%f\n'),'offsetTicks:newlineChar')
-verifyWarning(tetsCase,@()offsetTicks(gca,'y','%8.4f\n'),'offsetTicks:newlineChar')
-verifyWarning(tetsCase,@()offsetTicks(gca,'xy','Very\n%f'),'offsetTicks:newlineChar')
-verifyWarning(tetsCase,@()offsetTicks(gca,'x','%f\nWatts'),'offsetTicks:newlineChar')
+verifyWarning(testCase,@()offsetTicks(gca,'x','%f\n'),'offsetTicks:newlineChar')
+verifyWarning(testCase,@()offsetTicks(gca,'y','%8.4f\n'),'offsetTicks:newlineChar')
+verifyWarning(testCase,@()offsetTicks(gca,'xy','Very\n%f'),'offsetTicks:newlineChar')
+verifyWarning(testCase,@()offsetTicks(gca,'x','%f\nWatts'),'offsetTicks:newlineChar')
 end
 
 function testPlusSignWarning(testCase)
 testCase.TestData.plotExample();
-verifyWarning(tetsCase,@()offsetTicks(gca,'x','%+f'),'offsetTicks:signedPositive')
-verifyWarning(tetsCase,@()offsetTicks(gca,'y','%+8.4f'),'offsetTicks:signedPositive')
-verifyWarning(tetsCase,@()offsetTicks(gca,'xy','Very %+f'),'offsetTicks:signedPositive')
-verifyWarning(tetsCase,@()offsetTicks(gca,'x','%+f Watts'),'offsetTicks:signedPositive')
-verifyWarning(tetsCase,@()offsetTicks(gca,'y','%+g'),'offsetTicks:signedPositive')
-verifyWarning(tetsCase,@()offsetTicks(gca,'xy','%+d'),'offsetTicks:signedPositive')
+verifyWarning(testCase,@()offsetTicks(gca,'x','%+f'),'offsetTicks:signedPositive')
+verifyWarning(testCase,@()offsetTicks(gca,'y','%+8.4f'),'offsetTicks:signedPositive')
+verifyWarning(testCase,@()offsetTicks(gca,'xy','Very %+f'),'offsetTicks:signedPositive')
+verifyWarning(testCase,@()offsetTicks(gca,'x','%+f Watts'),'offsetTicks:signedPositive')
+verifyWarning(testCase,@()offsetTicks(gca,'y','%+g'),'offsetTicks:signedPositive')
+verifyWarning(testCase,@()offsetTicks(gca,'xy','%+d'),'offsetTicks:signedPositive')
 end
 
-% 
+%
 % function testOnAxesAtATime(testCase)
 % testCase.TestData.plotExample();
 % lim = xlim();
@@ -213,7 +213,7 @@ end
 % symlog('y');
 % verifyEqual(testCase,xlim(),lim,num2str(xlim()))
 % verifyEqual(testCase,get(gca,'XTickLabel'),lbl)
-% 
+%
 % testCase.TestData.plotExample();
 % lim = ylim();
 % lbl = get(gca,'YTickLabel');
@@ -221,4 +221,3 @@ end
 % verifyEqual(testCase,ylim(),lim,num2str(ylim()))
 % verifyEqual(testCase,get(gca,'YTickLabel'),lbl)
 % end
-

@@ -90,7 +90,6 @@ assumeEqual(testCase,ylbl,lbl)
 fpos = get(gcf,'Position');
 fpos = fpos.*[1,1,2,2];
 set(gcf,'Position',fpos)
-movegui(gcf,'onscreen')
 
 verifyEqual(testCase,xlim(),lim,num2str(xlim()))
 verifyEqual(testCase,ylim(),lim,num2str(ylim()))
@@ -115,4 +114,3 @@ symlog('x');
 verifyEqual(testCase,ylim(),lim,num2str(ylim()))
 verifyEqual(testCase,get(gca,'YTickLabel'),lbl)
 end
-

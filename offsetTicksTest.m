@@ -187,6 +187,24 @@ verifyEqual(testCase,ylbl,orig_ylbl)
 
 end
 
+function testNewLineWarning(testCase)
+testCase.TestData.plotExample();
+verifyWarning(tetsCase,@()offsetTicks(gca,'x','%f\n'),'offsetTicks:newlineChar')
+verifyWarning(tetsCase,@()offsetTicks(gca,'y','%8.4f\n'),'offsetTicks:newlineChar')
+verifyWarning(tetsCase,@()offsetTicks(gca,'xy','Very\n%f'),'offsetTicks:newlineChar')
+verifyWarning(tetsCase,@()offsetTicks(gca,'x','%f\nWatts'),'offsetTicks:newlineChar')
+end
+
+function testPlusSignWarning(testCase)
+testCase.TestData.plotExample();
+verifyWarning(tetsCase,@()offsetTicks(gca,'x','%+f'),'offsetTicks:signedPositive')
+verifyWarning(tetsCase,@()offsetTicks(gca,'y','%+8.4f'),'offsetTicks:signedPositive')
+verifyWarning(tetsCase,@()offsetTicks(gca,'xy','Very %+f'),'offsetTicks:signedPositive')
+verifyWarning(tetsCase,@()offsetTicks(gca,'x','%+f Watts'),'offsetTicks:signedPositive')
+verifyWarning(tetsCase,@()offsetTicks(gca,'y','%+g'),'offsetTicks:signedPositive')
+verifyWarning(tetsCase,@()offsetTicks(gca,'xy','%+d'),'offsetTicks:signedPositive')
+end
+
 % 
 % function testOnAxesAtATime(testCase)
 % testCase.TestData.plotExample();

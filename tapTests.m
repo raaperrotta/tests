@@ -20,6 +20,12 @@ if strcmp(thisversion,'R2015a') && ~verLessThan('matlab','8.5.1')
     thisversion = [thisversion,'SP1'];
 end
 
+% Set default figure position to off-screen to avoid interruptions
+scrn = get(0,'ScreenSize');
+pos = get(0,'DefaultFigurePosition');
+pos(1) = pos(1) + scrn(3); % sliiiiide to the right!
+set(0,'DefaultFigurePosition',pos);
+
 try
     fprintf('Fetching tests from "%s."\n',fullfile(wrk,name))
     if nargin==0

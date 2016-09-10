@@ -19,7 +19,7 @@ end
 
 function testGeneric(testCase)
 verifyEqual(testCase,parseTime(3600*24*365-1),'52 weeks, 23 hours, 59 minutes, and 59 seconds')
-verifyEqual(testCase,parseTime(3600*24*365-0.1),'52 weeks, 23 hours, 59 minutes, and 59.90 seconds')
+verifyEqual(testCase,parseTime(3600*24*365-1.1),'52 weeks, 23 hours, 59 minutes, and 59 seconds')
 verifyEqual(testCase,parseTime(123456789),'3 years, 47 weeks, 4 days, 21 hours, 33 minutes, and 9 seconds')
 end
 function testZero(testCase)
@@ -28,8 +28,8 @@ verifyEqual(testCase,parseTime(1e-9),'0')
 verifyEqual(testCase,parseTime(-1e-9),'0')
 end
 function testSingularSecond(testCase)
-verifyEqual(testCase,parseTime(1),'1 second')
-verifyEqual(testCase,parseTime(1.001),'1 second')
+verifyEqual(testCase,parseTime(1),'1.000 second')
+verifyEqual(testCase,parseTime(1.0001),'1.000 second')
 end
 function testUnitOmission(testCase)
 verifyEqual(testCase,parseTime(60),'1 minute')
@@ -40,15 +40,24 @@ verifyEqual(testCase,parseTime(3600*24*365),'1 year')
 end
 function testNegative(testCase)
 verifyEqual(testCase,parseTime(-1e-9),'0')
-verifyEqual(testCase,parseTime(-1),'-1 second')
+verifyEqual(testCase,parseTime(-1),'-1.000 second')
 verifyEqual(testCase,parseTime(1-3600*24*365),'-52 weeks, 23 hours, 59 minutes, and 59 seconds')
-verifyEqual(testCase,parseTime(0.1-3600*24*365),'-52 weeks, 23 hours, 59 minutes, and 59.90 seconds')
+verifyEqual(testCase,parseTime(1.1-3600*24*365),'-52 weeks, 23 hours, 59 minutes, and 59 seconds')
 verifyEqual(testCase,parseTime(-123456789),'-3 years, 47 weeks, 4 days, 21 hours, 33 minutes, and 9 seconds')
 end
-% function testForceUnits(testCase)
-% verifyEqual(testCase,parseTime(0, 0),'0')
-% verifyEqual(testCase,parseTime(0, 1),'0 seconds')
-% verifyEqual(testCase,parseTime(1e-9, 1),'0 seconds')
-% verifyEqual(testCase,parseTime(3600*24*365-1, 0),'52 weeks, 23 hours, 59 minutes, and 59 seconds')
-% verifyEqual(testCase,parseTime(3600*24*365-1, 1),'52 weeks, 23 hours, 59 minutes, and 59 seconds')
-% end
+function testPrecision(testCase)
+verifyEqual(testCase,parseTime(1e-6),'0.000001 seconds')
+verifyEqual(testCase,parseTime(-1e-6),'-0.000001 seconds')
+verifyEqual(testCase,parseTime(1e-6,7),'0.0000010 seconds')
+verifyEqual(testCase,parseTime(1e-6,5),'0')
+verifyEqual(testCase,parseTime(1+1e-6,5),'1.00000 second')
+verifyEqual(testCase,parseTime(1+5e-6,5),'1.00001 seconds')
+verifyEqual(testCase,parseTime(0.999,3),'0.999 seconds')
+verifyEqual(testCase,parseTime(0.9994999,3),'0.999 seconds')
+verifyEqual(testCase,parseTime(0.9995,3),'1.000 second')
+verifyEqual(testCase,parseTime(0.99995,4),'1.0000 second')
+% Have to watch out for that rounding to avoid '1.0000 seconds'
+verifyEqual(testCase,parseTime(0.99995),'1.000 second')
+verifyEqual(testCase,parseTime(-0.99995),'-1.000 second')
+verifyEqual(testCase,parseTime(-9.9995),'-10.000 seconds')
+end

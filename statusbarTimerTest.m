@@ -12,7 +12,6 @@ restoredefaultpath()
 warning(state)
 addpath(fullfile(getenv('WORKSPACE'),'statusbarTimer'))
 addpath(fullfile(getenv('WORKSPACE'),'parseTime'))
-addpath(fullfile(getenv('WORKSPACE'),'num2sepstr'))
 testCase.TestData.JFrameWarningState = ...
     warning('off','MATLAB:HandleGraphics:ObsoletedProperty:JavaFrame');
 end
@@ -80,7 +79,7 @@ fig = figure();
 t = verifyWarningFree(testCase,@()statusbarTimer(fig));
 verifyClass(testCase,t,'timer')
 verifyWarningFree(testCase,@()stop(t));
-
+drawnow()
 t = verifyWarningFree(testCase,@()statusbarTimer(fig));
 verifyClass(testCase,t,'timer')
 verifyWarningFree(testCase,@()close(fig));
@@ -125,4 +124,17 @@ warning('on','MATLAB:HandleGraphics:ObsoletedProperty:JavaFrame')
 fig = figure();
 verifyWarning(testCase,@()statusbarTimer(fig),'statusbarTimer:JFrame')
 close(fig)
+end
+function testNum2SepStr(testCase)
+orig_path = path();
+restore = onCleanup(@()path(orig_path));
+addpath(fullfile(getenv('WORKSPACE'),'num2sepstr'))
+
+t = verifyWarningFree(testCase,@()statusbarTimer());
+verifyClass(testCase,t,'timer')
+verifyWarningFree(testCase,@()stop(t));
+
+t = verifyWarningFree(testCase,@()statusbarTimer(gcf()));
+verifyClass(testCase,t,'timer')
+verifyWarningFree(testCase,@()stop(t));
 end

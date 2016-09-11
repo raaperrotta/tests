@@ -11,7 +11,6 @@ state = warning('off','MATLAB:dispatcher:pathWarning');
 restoredefaultpath()
 warning(state)
 addpath(fullfile(getenv('WORKSPACE'),'parseTime'))
-addpath(fullfile(getenv('WORKSPACE'),'num2sepstr'))
 end
 function teardownOnce(testCase)
 path(testCase.TestData.orig_path)
@@ -60,4 +59,13 @@ verifyEqual(testCase,parseTime(0.99995,4),'1.0000 seconds')
 verifyEqual(testCase,parseTime(0.99995),'1.000 seconds')
 verifyEqual(testCase,parseTime(-0.99995),'-1.000 seconds')
 verifyEqual(testCase,parseTime(-9.9995),'-10.000 seconds')
+end
+function testNum2SepStr(testCase)
+orig_path = path();
+restore = onCleanup(@()path(orig_path));
+verifyEqual(testCase,parseTime(1e12),'31709 years, 41 weeks, 2 days, 1 hour, 46 minutes, and 40 seconds')
+verifyEqual(testCase,parseTime(1e6*365*3600*24),'1000000 years')
+addpath(fullfile(getenv('WORKSPACE'),'num2sepstr'))
+verifyEqual(testCase,parseTime(1e12),'31,709 years, 41 weeks, 2 days, 1 hour, 46 minutes, and 40 seconds')
+verifyEqual(testCase,parseTime(1e6*365*3600*24),'1,000,000 years')
 end

@@ -66,3 +66,8 @@ verifyEqual(testCase,num2sepstr(sqrt(-1e9),'%.2f'),'0.00+31,622.78i')
 verifyEqual(testCase,num2sepstr(1e3*(-pi + exp(1)*1i)),'-3,141.5927+2,718.2818i')
 verifyEqual(testCase,num2sepstr(1e3*(-pi + exp(1)*1i),'%.2f'),'-3,141.59+2,718.28i')
 end
+function testCellOutput(testCase)
+verifyEqual(testCase,num2sepstr(magic(2)*1e6),{'1,000,000','3,000,000';'4,000,000','2,000,000'})
+x = ones(1,2,3,4,5);
+verifyEqual(testCase,size(num2sepstr(x)),size(x))
+end

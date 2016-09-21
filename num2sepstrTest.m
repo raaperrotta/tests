@@ -18,7 +18,8 @@ end
 
 function testGeneric(testCase)
 verifyEqual(testCase,num2sepstr(1000),'1,000')
-verifyEqual(testCase,num2sepstr(1234.5),'1,234.5')
+verifyEqual(testCase,num2sepstr(1234.5),'1,234.5') % trims trailing zeros with auto format
+verifyEqual(testCase,num2sepstr(1234.5,'%f'),'1,234.500000') % but not when format is specified
 verifyEqual(testCase,num2sepstr(1234.5,'%.2f'),'1,234.50')
 verifyEqual(testCase,num2sepstr(1234.5,'%.4f'),'1,234.5000')
 verifyEqual(testCase,num2sepstr(123456789.5,'%.0f'),'123,456,790')
@@ -35,6 +36,7 @@ end
 function testNoCommas(testCase)
 verifyEqual(testCase,num2sepstr(0),num2str(0))
 verifyEqual(testCase,num2sepstr(1),num2str(1))
+verifyEqual(testCase,num2sepstr(1.5),num2str(1.5))
 verifyEqual(testCase,num2sepstr(pi),num2str(pi))
 verifyEqual(testCase,num2sepstr(pi,'%.4f'),num2str(pi,'%.4f'))
 verifyEqual(testCase,num2sepstr(pi,'%.8f'),num2str(pi,'%.8f'))
@@ -45,13 +47,11 @@ function testFormatSpecfiers(testCase)
 verifyEqual(testCase,num2sepstr(1234.6,'%.4f'),'1,234.6000')
 verifyEqual(testCase,num2sepstr(1234.6,'%.0f'),'1,235')
 verifyEqual(testCase,num2sepstr(1234.6,'%+.4f'),'+1,234.6000')
-verifyEqual(testCase,num2sepstr(1234.6,'%10.4f'),'1,234.6000')
-verifyEqual(testCase,num2sepstr(1234.6,'%20.4f'),'1,234.6000')
 end
 function testLongNumbers(testCase)
 verifyEqual(testCase,num2sepstr(1234567890123456),'1,234,567,890,123,456')
 verifyEqual(testCase,num2sepstr(1234567890123456,'%.0f'),'1,234,567,890,123,456')
-verifyEqual(testCase,num2sepstr(12345678901234567890),'1.234567890123457e+19')
+verifyEqual(testCase,num2sepstr(12345678901234567890),'12,345,678,901,234,567,168')
 verifyEqual(testCase,num2sepstr(12345678901234,'%.0f'),'12,345,678,901,234')
 end
 function testScientificNotation(testCase)

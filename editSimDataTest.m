@@ -3,6 +3,15 @@ results = functiontests(localfunctions());
 end
 
 function setupOnce(testCase)
+testCase.TestData.orig_path = path();
+% On my install, the perl script called in restoredefaultpath.m finds the
+% stateflow folder twice. I don't know why but it throws an annoying
+% warning.
+state = warning('off','MATLAB:dispatcher:pathWarning');
+restoredefaultpath()
+warning(state)
+addpath(fullfile(getenv('WORKSPACE'),'editSimData'))
+
 x = Simulink.SimulationData.Dataset();
 s = Simulink.SimulationData.Signal();
 s.Name = 'Signal1';
@@ -12,6 +21,9 @@ x = x.addElement(s);
 s.Name = 'Signal2';
 x = x.addElement(s);
 testCase.TestData.x = x;
+end
+function teardownOnce(testCase)
+path(testCase.TestData.orig_path)
 end
 
 function testNoOp(testCase)
@@ -183,12 +195,3 @@ z.Time = z.Time + b;
 y = editSimData(x,'','Time',@(t)t+b);
 verifyEqual(testCase,y,z)
 end
-
-
-
-
-
-
-
-
-

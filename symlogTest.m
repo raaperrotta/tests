@@ -114,3 +114,54 @@ symlog('x');
 verifyEqual(testCase,ylim(),lim,num2str(ylim()))
 verifyEqual(testCase,get(gca,'YTickLabel'),lbl)
 end
+
+function testTransformPatches(testCase)
+testCase.TestData.plotExample();
+X = [20,1,-40,-1]';
+Y = [0,30,0,-30]';
+h = patch(X,Y,[0.8,0.2,0.2]);
+symlog('x')
+C = 1; % the default value of 10^0
+X = sign(X).*log10(1+abs(X)/C);
+verifyLessThan(testCase,abs(h.XData-X),1e-12)
+verifyLessThan(testCase,abs(h.YData-Y),1e-12)
+end
+
+function testTransformRectangles(testCase)
+testCase.TestData.plotExample();
+
+pos = [-20,-40,40,42];
+X = pos(1) + [0, pos(3)];
+Y = pos(2) + [0, pos(4)];
+h = rectangle('Position',pos);
+
+symlog('x')
+
+C = 1; % the default value of 10^0
+X = sign(X).*log10(1+abs(X)/C);
+
+X2 = h.Position(1) + [0, h.Position(3)];
+Y2 = h.Position(2) + [0, h.Position(4)];
+verifyLessThan(testCase,abs(X2-X),1e-12)
+verifyLessThan(testCase,abs(Y2-Y),1e-12)
+
+symlog('x', -1)
+
+C = 10^-1;
+X = pos(1) + [0, pos(3)];
+X = sign(X).*log10(1+abs(X)/C);
+
+X2 = h.Position(1) + [0, h.Position(3)];
+Y2 = h.Position(2) + [0, h.Position(4)];
+verifyLessThan(testCase,abs(X2-X),1e-12)
+verifyLessThan(testCase,abs(Y2-Y),1e-12)
+end
+
+
+
+
+
+
+
+
+
